@@ -16,6 +16,8 @@
 
   /* EXACT conversion of rgb(24, 24, 24) */
   --color-secondary: 24 24 24;
+
+  
 }
 
 @plugin "daisyui/theme" {
