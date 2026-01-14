@@ -1,13 +1,23 @@
 @import "tailwindcss";
-@plugin "daisyui" {
-  themes: [
-			"light",
-			{
-				black: {
-					...daisyUIThemes["black"],
-					primary: "rgb(29, 155, 240)",
-					secondary: "rgb(24, 24, 24)",
-				},
-			},
-		],
+
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+};
+
+/* Black theme — EXACT MATCH */
+@plugin "daisyui/theme" {
+  name: "black";
+  
+  /* EXACT conversion of rgb(29, 155, 240) */
+  --color-primary: 29 155 240;
+
+  /* EXACT conversion of rgb(24, 24, 24) */
+  --color-secondary: 24 24 24;
 }
+
+@plugin "daisyui/theme" {
+  name: "coffee";
+};
