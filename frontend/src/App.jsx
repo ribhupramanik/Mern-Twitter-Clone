@@ -13,12 +13,13 @@ import LoadingSpinner from './components/common/LoadingSpinner';
 
 
 function App() {
-	const { data:authUser, isLoading, error, isError } = useQuery({
+	const { data:authUser, isLoading } = useQuery({
 		queryKey: ['authUser'],
 		queryFn: async() => {
 			try {
 				const res = await fetch("/api/auth/me");
 				const data = await res.json();
+				if(data.error) return null;
 				if(!res.ok){
 					throw new Error(data.error || "Something went wrong");
 				}
@@ -28,7 +29,8 @@ function App() {
 			catch(error){
 				throw new Error(error)
 			}
-		}
+		},
+		retry:false, 
 	});
 
 	if(isLoading){
