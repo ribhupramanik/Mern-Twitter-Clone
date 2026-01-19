@@ -26,7 +26,12 @@ const ProfilePage = () => {
 
   const isMyProfile = true;
 
-  const { data:user, isLoading, refetch, isRefetching } = useQuery({
+  const {
+    data: user,
+    isLoading,
+    refetch,
+    isRefetching,
+  } = useQuery({
     queryKey: ["userProfile"],
     queryFn: async () => {
       try {
@@ -42,7 +47,7 @@ const ProfilePage = () => {
     },
   });
 
-  const memberSinceDate = formatMemberSinceDate(user?.createdAt)
+  const memberSinceDate = formatMemberSinceDate(user?.createdAt);
 
   const handleImgChange = (e, state) => {
     const file = e.target.files[0];
@@ -57,8 +62,8 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-	refetch()
-  }, [username, refetch])
+    refetch();
+  }, [username, refetch]);
 
   return (
     <>
@@ -221,7 +226,7 @@ const ProfilePage = () => {
             </>
           )}
 
-          <Posts />
+          <Posts feedType={feedType} username={username} userId={user?._id} />
         </div>
       </div>
     </>
