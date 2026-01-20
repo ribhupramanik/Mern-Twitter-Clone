@@ -11,7 +11,12 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FaLink } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
-import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { formatMemberSinceDate } from "../../utils/date";
 import useFollow from "../../hooks/useFollow";
 import toast from "react-hot-toast";
@@ -76,14 +81,14 @@ const ProfilePage = () => {
     },
     onSuccess: () => {
       toast.success("Profile updated successfully");
-	  Promise.all([
-		queryClient.invalidateQueries({queryKey: ["authUser"]}),
-		queryClient.invalidateQueries({queryKey: ["userProfile"]}),
-	  ])
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["authUser"] }),
+        queryClient.invalidateQueries({ queryKey: ["userProfile"] }),
+      ]);
     },
-	onError: (error)=> {
-		toast.error(error.message)
-	}
+    onError: (error) => {
+      toast.error(error.message);
+    },
   });
 
   const isMyProfile = authUser._id === user?._id;
@@ -180,7 +185,7 @@ const ProfilePage = () => {
                 </div>
               </div>
               <div className="flex justify-end px-4 mt-5">
-                {isMyProfile && <EditProfileModal />}
+                {isMyProfile && <EditProfileModal authUser={authUser} />}
                 {!isMyProfile && (
                   <button
                     className="btn btn-outline rounded-full btn-sm"
@@ -216,12 +221,16 @@ const ProfilePage = () => {
                       <>
                         <FaLink className="w-3 h-3 text-slate-500" />
                         <a
-                          href="https://youtube.com/@asaprogrammer_"
+                          href={
+                            user?.link?.startsWith("http")
+                              ? user.link
+                              : `https://${user?.link}`
+                          }
                           target="_blank"
                           rel="noreferrer"
                           className="text-sm text-blue-500 hover:underline"
                         >
-                          youtube.com/@asaprogrammer_
+                          {user?.link}
                         </a>
                       </>
                     </div>
