@@ -164,7 +164,7 @@ const ProfilePage = () => {
                     onClick={async () => {
                       await updateProfile({ coverImg, profileImg });
                       setProfileImg(null);
-                      setCoverImg(null);
+                      setCoverImg(null); 
                     }}
                   >
                     {isUpdatingProfile ? "Updating.." : "Update"}
