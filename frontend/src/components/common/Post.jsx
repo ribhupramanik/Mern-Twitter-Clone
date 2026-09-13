@@ -123,8 +123,8 @@ const Post = ({ post }) => {
 
   return (
     <>
-      <div className="flex gap-2 items-start p-4 border-b border-gray-700">
-        <div className="avatar">
+      <div className="flex gap-2 items-start p-3 sm:p-4 border-b border-gray-700">
+        <div className="avatar shrink-0">
           <Link
             to={`/profile/${postOwner.username}`}
             className="w-8 rounded-full overflow-hidden"
@@ -132,12 +132,12 @@ const Post = ({ post }) => {
             <img src={postOwner.profileImg || "/avatar-placeholder.png"} />
           </Link>
         </div>
-        <div className="flex flex-col flex-1">
-          <div className="flex gap-2 items-center">
+        <div className="flex min-w-0 flex-col flex-1">
+          <div className="flex min-w-0 flex-wrap gap-x-2 gap-y-1 items-center">
             <Link to={`/profile/${postOwner.username}`} className="font-bold">
               {postOwner.fullName}
             </Link>
-            <span className="text-gray-700 flex gap-1 text-sm">
+            <span className="text-slate-500 flex min-w-0 flex-wrap gap-1 text-sm">
               <Link to={`/profile/${postOwner.username}`}>
                 @{postOwner.username}
               </Link>
@@ -161,13 +161,13 @@ const Post = ({ post }) => {
             {post.img && (
               <img
                 src={post.img}
-                className="h-80 object-contain rounded-lg border border-gray-700"
+                className="w-full max-h-80 object-contain rounded-lg border border-gray-700"
                 alt=""
               />
             )}
           </div>
           <div className="flex justify-between mt-3">
-            <div className="flex gap-4 items-center w-2/3 justify-between">
+            <div className="flex min-w-0 gap-3 items-center flex-1 justify-between">
               <div
                 className="flex gap-1 items-center cursor-pointer group"
                 onClick={() =>
@@ -196,7 +196,7 @@ const Post = ({ post }) => {
                     )}
                     {post.comments.map((comment) => (
                       <div key={comment._id} className="flex gap-2 items-start">
-                        <div className="avatar">
+                        <div className="avatar shrink-0">
                           <div className="w-8 rounded-full">
                             <img
                               src={
@@ -206,8 +206,8 @@ const Post = ({ post }) => {
                             />
                           </div>
                         </div>
-                        <div className="flex flex-col">
-                          <div className="flex items-center gap-1">
+                        <div className="flex min-w-0 flex-col">
+                          <div className="flex flex-wrap items-center gap-1">
                             <span className="font-bold">
                               {comment.user.fullName}
                             </span>
@@ -221,7 +221,7 @@ const Post = ({ post }) => {
                     ))}
                   </div>
                   <form
-                    className="flex gap-2 items-center mt-4 border-t border-gray-600 pt-2"
+                    className="flex min-w-0 flex-wrap gap-x-2 gap-y-1 items-center mt-4 border-t border-gray-600 pt-2"
                     onSubmit={handlePostComment}
                   >
                     <textarea
@@ -266,7 +266,7 @@ const Post = ({ post }) => {
                 </span>
               </div>
             </div>
-            <div className="flex w-1/3 justify-end gap-2 items-center">
+            <div className="flex shrink-0 justify-end gap-2 items-center ml-4">
               <FaRegBookmark className="w-4 h-4 text-slate-500 cursor-pointer" />
             </div>
           </div>

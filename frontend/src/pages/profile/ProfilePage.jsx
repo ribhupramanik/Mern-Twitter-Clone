@@ -77,20 +77,20 @@ const ProfilePage = () => {
 
   return (
     <>
-      <div className="flex-[4_4_0]  border-r border-gray-700 min-h-screen ">
+      <div className="min-w-0 flex-1 border-r border-gray-700 min-h-dvh">
         {/* HEADER */}
         {(isLoading || isRefetching) && <ProfileHeaderSkeleton />}
         {!isLoading && !isRefetching && !user && (
           <p className="text-center text-lg mt-4">User not found</p>
         )}
-        <div className="flex flex-col">
+        <div className="flex min-w-0 flex-col">
           {!isLoading && !isRefetching && user && (
             <>
-              <div className="flex gap-10 px-4 py-2 items-center">
+              <div className="flex gap-4 px-4 py-2 items-center">
                 <Link to="/">
                   <FaArrowLeft className="w-4 h-4" />
                 </Link>
-                <div className="flex flex-col">
+                <div className="flex min-w-0 flex-col">
                   <p className="font-bold text-lg">{user?.fullName}</p>
                   <span className="text-sm text-slate-500">
                     {POSTS?.length} posts
@@ -101,16 +101,18 @@ const ProfilePage = () => {
               <div className="relative group/cover">
                 <img
                   src={coverImg || user?.coverImg || "/cover.png"}
-                  className="h-52 w-full object-cover"
+                  className="h-36 sm:h-52 w-full object-cover"
                   alt="cover image"
                 />
                 {isMyProfile && (
-                  <div
-                    className="absolute top-2 right-2 rounded-full p-2 bg-gray-800 bg-opacity-75 cursor-pointer opacity-0 group-hover/cover:opacity-100 transition duration-200"
+                  <button
+                    type="button"
+                    aria-label="Edit cover image"
+                    className="profile-image-edit absolute top-2 right-2 flex h-11 w-11 items-center justify-center rounded-full bg-gray-800 cursor-pointer opacity-0 group-hover/cover:opacity-100 focus:opacity-100 transition duration-200"
                     onClick={() => coverImgRef.current.click()}
                   >
                     <MdEdit className="w-5 h-5 text-white" />
-                  </div>
+                  </button>
                 )}
 
                 <input
@@ -126,8 +128,8 @@ const ProfilePage = () => {
                   onChange={(e) => handleImgChange(e, "profileImg")}
                 />
                 {/* USER AVATAR */}
-                <div className="avatar absolute -bottom-16 left-4">
-                  <div className="w-32 rounded-full relative group/avatar">
+                <div className="avatar absolute -bottom-10 sm:-bottom-16 left-4">
+                  <div className="w-20 sm:w-32 rounded-full relative group/avatar">
                     <img
                       src={
                         profileImg ||
@@ -135,18 +137,20 @@ const ProfilePage = () => {
                         "/avatar-placeholder.png"
                       }
                     />
-                    <div className="absolute top-5 right-3 p-1 bg-primary rounded-full group-hover/avatar:opacity-100 opacity-0 cursor-pointer">
-                      {isMyProfile && (
-                        <MdEdit
-                          className="w-4 h-4 text-white"
+                    {isMyProfile && (
+                        <button
+                          type="button"
+                          aria-label="Edit profile image"
+                          className="profile-image-edit absolute top-1 right-0 sm:top-5 sm:right-3 flex h-11 w-11 items-center justify-center bg-primary rounded-full group-hover/avatar:opacity-100 focus:opacity-100 opacity-0 cursor-pointer"
                           onClick={() => profileImgRef.current.click()}
-                        />
-                      )}
-                    </div>
+                        >
+                          <MdEdit className="w-4 h-4 text-white" />
+                        </button>
+                    )}
                   </div>
                 </div>
               </div>
-              <div className="flex justify-end px-4 mt-5">
+              <div className="flex min-h-11 flex-wrap justify-end gap-2 pl-28 sm:pl-40 pr-4 mt-3 sm:mt-5">
                 {isMyProfile && <EditProfileModal authUser={authUser} />}
                 {!isMyProfile && (
                   <button
@@ -160,7 +164,7 @@ const ProfilePage = () => {
                 )}
                 {(coverImg || profileImg) && (
                   <button
-                    className="btn btn-primary rounded-full btn-sm text-white px-4 ml-2"
+                    className="btn btn-primary rounded-full btn-sm text-white px-4"
                     onClick={async () => {
                       await updateProfile({ coverImg, profileImg });
                       setProfileImg(null);
@@ -172,8 +176,8 @@ const ProfilePage = () => {
                 )}
               </div>
 
-              <div className="flex flex-col gap-4 mt-14 px-4">
-                <div className="flex flex-col">
+              <div className="flex min-w-0 flex-col gap-4 mt-5 sm:mt-10 px-4">
+                <div className="flex min-w-0 flex-col">
                   <span className="font-bold text-lg">{user?.fullName}</span>
                   <span className="text-sm text-slate-500">
                     @{user?.username}
@@ -183,9 +187,9 @@ const ProfilePage = () => {
 
                 <div className="flex gap-2 flex-wrap">
                   {user?.link && (
-                    <div className="flex gap-1 items-center ">
+                    <div className="flex min-w-0 max-w-full gap-1 items-center ">
                       <>
-                        <FaLink className="w-3 h-3 text-slate-500" />
+                        <FaLink className="w-3 h-3 shrink-0 text-slate-500" />
                         <a
                           href={
                             user?.link?.startsWith("http")
@@ -194,7 +198,7 @@ const ProfilePage = () => {
                           }
                           target="_blank"
                           rel="noreferrer"
-                          className="text-sm text-blue-500 hover:underline"
+                          className="min-w-0 text-sm text-blue-500 hover:underline"
                         >
                           {user?.link}
                         </a>
@@ -202,7 +206,7 @@ const ProfilePage = () => {
                     </div>
                   )}
                   <div className="flex gap-2 items-center">
-                    <IoCalendarOutline className="w-4 h-4 text-slate-500" />
+                    <IoCalendarOutline className="w-4 h-4 shrink-0 text-slate-500" />
                     <span className="text-sm text-slate-500">
                       {memberSinceDate}
                     </span>

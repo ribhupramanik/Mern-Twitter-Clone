@@ -2,6 +2,40 @@
 
 @plugin "daisyui";
 
+/* Let nested flex layouts shrink and long user content wrap on narrow screens. */
+html {
+  overflow-wrap: anywhere;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+.modal-box {
+  width: calc(100% - 2rem);
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+}
+
+@media (hover: none) {
+  .profile-image-edit {
+    opacity: 1;
+  }
+}
+
+/* Prevent mobile browsers from zooming into small form text on focus. */
+@media (max-width: 639px) {
+  input,
+  textarea {
+    font-size: 1rem;
+  }
+}
+
 @plugin "daisyui/theme" {
   name: "light";
   default: true;

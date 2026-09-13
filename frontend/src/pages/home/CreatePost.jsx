@@ -43,9 +43,6 @@ const CreatePost = () => {
 	
 	
 
-	const data = {
-		profileImg: "/avatars/boy1.png",
-	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -64,13 +61,13 @@ const CreatePost = () => {
 	};
 
 	return (
-		<div className='flex p-4 items-start gap-4 border-b border-gray-700'>
-			<div className='avatar'>
+		<div className='flex p-3 sm:p-4 items-start gap-3 sm:gap-4 border-b border-gray-700'>
+			<div className='avatar shrink-0'>
 				<div className='w-8 rounded-full'>
 					<img src={authUser.profileImg || "/avatar-placeholder.png"} />
 				</div>
 			</div>
-			<form className='flex flex-col gap-2 w-full' onSubmit={handleSubmit}>
+			<form className='flex min-w-0 flex-1 flex-col gap-2' onSubmit={handleSubmit}>
 				<textarea
 					className='textarea w-full p-0 text-lg resize-none border-none focus:outline-none  border-gray-800'
 					placeholder='What is happening?!'
@@ -78,7 +75,7 @@ const CreatePost = () => {
 					onChange={(e) => setText(e.target.value)}
 				/>
 				{img && (
-					<div className='relative w-72 mx-auto'>
+					<div className='relative w-full max-w-72 mx-auto'>
 						<IoCloseSharp
 							className='absolute top-0 right-0 text-white bg-gray-800 rounded-full w-5 h-5 cursor-pointer'
 							onClick={() => {

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {Routes, Route, Navigate} from 'react-router-dom'
 import HomePage from "./pages/home/HomePage";
 import LoginPage from "./pages/auth/login/LoginPage"
@@ -41,7 +40,7 @@ function App() {
 		)
 	}
   return (
-    <div className='flex max-w-6xl mx-auto'>
+    <div className={`flex min-h-dvh w-full min-w-0 max-w-6xl mx-auto ${authUser ? 'pb-[calc(4.5rem+env(safe-area-inset-bottom))] sm:pb-0' : ''}`}>
       {authUser && <Sidebar/>}
 			<Routes>
 				<Route path='/' element={authUser ? <HomePage /> : <Navigate to="/login" />} />

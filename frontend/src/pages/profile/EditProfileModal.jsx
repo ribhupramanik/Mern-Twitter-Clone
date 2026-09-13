@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useUpdateUserProfile from "../../hooks/useUpdateUserProfile";
 
 const EditProfileModal = ({ authUser }) => {
@@ -18,27 +18,26 @@ const EditProfileModal = ({ authUser }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  useEffect(() => {
+  const openModal = () => {
     if (authUser) {
       setFormData({
         fullName: authUser.fullName,
         username: authUser.username,
         email: authUser.email,
-        bio: authUser.bio,
-        link: authUser.link,
+        bio: authUser.bio || "",
+        link: authUser.link || "",
         newPassword: "",
         currentPassword: "",
       });
     }
-  }, [authUser]);
+    document.getElementById("edit_profile_modal").showModal();
+  };
 
   return (
     <>
       <button
         className="btn btn-outline rounded-full btn-sm"
-        onClick={() =>
-          document.getElementById("edit_profile_modal").showModal()
-        }
+        onClick={openModal}
       >
         Edit profile
       </button>
@@ -52,11 +51,11 @@ const EditProfileModal = ({ authUser }) => {
               updateProfile(formData);
             }}
           >
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <input
                 type="text"
                 placeholder="Full Name"
-                className="flex-1 input border border-gray-700 rounded p-2 input-md"
+                className="min-w-0 w-full input border border-gray-700 rounded p-2 input-md"
                 value={formData.fullName}
                 name="fullName"
                 onChange={handleInputChange}
@@ -64,34 +63,34 @@ const EditProfileModal = ({ authUser }) => {
               <input
                 type="text"
                 placeholder="Username"
-                className="flex-1 input border border-gray-700 rounded p-2 input-md"
+                className="min-w-0 w-full input border border-gray-700 rounded p-2 input-md"
                 value={formData.username}
                 name="username"
                 onChange={handleInputChange}
               />
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <input
                 type="email"
                 placeholder="Email"
-                className="flex-1 input border border-gray-700 rounded p-2 input-md"
+                className="min-w-0 w-full input border border-gray-700 rounded p-2 input-md"
                 value={formData.email}
                 name="email"
                 onChange={handleInputChange}
               />
               <textarea
                 placeholder="Bio"
-                className="flex-1 input border border-gray-700 rounded p-2 input-md"
+                className="min-w-0 w-full input border border-gray-700 rounded p-2 input-md"
                 value={formData.bio}
                 name="bio"
                 onChange={handleInputChange}
               />
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <input
                 type="password"
                 placeholder="Current Password"
-                className="flex-1 input border border-gray-700 rounded p-2 input-md"
+                className="min-w-0 w-full input border border-gray-700 rounded p-2 input-md"
                 value={formData.currentPassword}
                 name="currentPassword"
                 onChange={handleInputChange}
@@ -99,7 +98,7 @@ const EditProfileModal = ({ authUser }) => {
               <input
                 type="password"
                 placeholder="New Password"
-                className="flex-1 input border border-gray-700 rounded p-2 input-md"
+                className="min-w-0 w-full input border border-gray-700 rounded p-2 input-md"
                 value={formData.newPassword}
                 name="newPassword"
                 onChange={handleInputChange}
@@ -108,7 +107,7 @@ const EditProfileModal = ({ authUser }) => {
             <input
               type="text"
               placeholder="Link"
-              className="flex-1 input border border-gray-700 rounded p-2 input-md"
+              className="min-w-0 w-full input border border-gray-700 rounded p-2 input-md"
               value={formData.link}
               name="link"
               onChange={handleInputChange}

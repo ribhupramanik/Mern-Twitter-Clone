@@ -36,67 +36,41 @@ const Sidebar = () => {
 	const {data:authUser} = useQuery({queryKey: ['authUser']})
 
 	return (
-		<div className='md:flex-[2_2_0] w-18 max-w-52'>
-			<div className='sticky top-0 left-0 h-screen flex flex-col border-r border-gray-700 w-20 md:w-full'>
-				<Link to='/' className='flex justify-center md:justify-start'>
-					<XSvg className='px-2 w-12 h-12 rounded-full fill-white hover:bg-stone-900' />
-				</Link>
-				<ul className='flex flex-col gap-3 mt-4'>
-					<li className='flex justify-center md:justify-start'>
-						<Link
-							to='/'
-							className='flex gap-3 items-center hover:bg-stone-900 transition-all rounded-full duration-300 py-2 pl-2 pr-4 max-w-fit cursor-pointer'
-						>
-							<MdHomeFilled className='w-8 h-8' />
-							<span className='text-lg hidden md:block'>Home</span>
-						</Link>
-					</li>
-					<li className='flex justify-center md:justify-start'>
-						<Link
-							to='/notifications'
-							className='flex gap-3 items-center hover:bg-stone-900 transition-all rounded-full duration-300 py-2 pl-2 pr-4 max-w-fit cursor-pointer'
-						>
-							<IoNotifications className='w-6 h-6' />
-							<span className='text-lg hidden md:block'>Notifications</span>
-						</Link>
-					</li>
-
-					<li className='flex justify-center md:justify-start'>
-						<Link
-							to={`/profile/${authUser?.username}`}
-							className='flex gap-3 items-center hover:bg-stone-900 transition-all rounded-full duration-300 py-2 pl-2 pr-4 max-w-fit cursor-pointer'
-						>
-							<FaUser className='w-6 h-6' />
-							<span className='text-lg hidden md:block'>Profile</span>
-						</Link>
-					</li>
-				</ul>
-				{authUser && (
-					<Link
-						to={`/profile/${authUser.username}`}
-						className='mt-auto mb-10 flex gap-2 items-start transition-all duration-300 hover:bg-[#181818] py-2 px-4 rounded-full'
-					>
-						<div className='avatar hidden md:inline-flex'>
-							<div className='w-8 rounded-full'>
-								<img src={authUser?.profileImg || "/avatar-placeholder.png"} />
-							</div>
-						</div>
-						<div className='flex justify-between flex-1'>
-							<div className='hidden md:block'>
-								<p className='text-white font-bold text-sm w-30 truncate'>{authUser?.fullName}</p>
-								<p className='text-slate-500 text-sm'>@{authUser?.username}</p>
-							</div>
-							<BiLogOut className='w-5 h-5 cursor-pointer' 
-								onClick={(e) => {
-									e.preventDefault();
-									logout();
-								}}
-							/>
-						</div>
-					</Link>
-				)}
-			</div>
-		</div>
-	);
+    <aside className="fixed inset-x-0 bottom-0 z-30 border-t border-gray-700 bg-base-100 pb-[env(safe-area-inset-bottom)] sm:static sm:w-20 sm:shrink-0 sm:border-t-0 sm:pb-0 lg:w-52">
+      <nav aria-label="Main navigation" className="flex min-h-16 items-center px-2 sm:sticky sm:top-0 sm:h-dvh sm:flex-col sm:items-stretch sm:overflow-y-auto sm:border-r sm:border-gray-700 sm:py-2">
+        <Link to="/" aria-label="Home" className="hidden justify-center sm:flex lg:justify-start">
+          <XSvg className="h-12 w-12 rounded-full fill-white p-2 hover:bg-stone-900" />
+        </Link>
+        <ul className="flex flex-1 items-center justify-around gap-1 sm:mt-4 sm:flex-none sm:flex-col sm:items-stretch sm:gap-3">
+          {[
+            { to: '/', label: 'Home', icon: <MdHomeFilled className="h-6 w-6 shrink-0" /> },
+            { to: '/notifications', label: 'Notifications', icon: <IoNotifications className="h-6 w-6 shrink-0" /> },
+            { to: `/profile/${authUser?.username}`, label: 'Profile', icon: <FaUser className="h-6 w-6 shrink-0" /> },
+          ].map(({ to, label, icon }) => (
+            <li key={label} className="flex justify-center lg:justify-start">
+              <Link to={to} aria-label={label} className="flex min-h-11 min-w-11 items-center justify-center gap-3 rounded-full p-2 transition-colors hover:bg-stone-900 lg:px-3">
+                {icon}
+                <span className="hidden text-lg lg:block">{label}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        {authUser && (
+          <div className="flex items-center gap-1 sm:mt-auto sm:py-2">
+            <Link to={`/profile/${authUser.username}`} className="hidden min-w-0 flex-1 items-center gap-2 rounded-full p-2 hover:bg-stone-900 lg:flex">
+              <img className="h-8 w-8 shrink-0 rounded-full object-cover" src={authUser.profileImg || '/avatar-placeholder.png'} alt="Your profile" />
+              <div className="min-w-0">
+                <p className="truncate text-sm font-bold text-white">{authUser.fullName}</p>
+                <p className="truncate text-sm text-slate-500">@{authUser.username}</p>
+              </div>
+            </Link>
+            <button type="button" aria-label="Log out" title="Log out" onClick={() => logout()} className="mx-auto flex h-11 w-11 shrink-0 items-center justify-center rounded-full hover:bg-stone-900">
+              <BiLogOut className="h-5 w-5" />
+            </button>
+          </div>
+        )}
+      </nav>
+    </aside>
+  );
 };
 export default Sidebar;
